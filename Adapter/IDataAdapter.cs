@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Adapter
 {
-    internal interface XMLtoJSONAdapter
+    public interface IDataAdapter
     {
+        string ConvertData(string data);
     }
 }

@@ -40,7 +40,7 @@ namespace Adapter
                             ConvertXmlNodeToJson(childNode, jsonBuilder);
                             jsonBuilder.Append(",");
                         }
-                        jsonBuilder.Remove(jsonBuilder.Length - 1, 1); // Remove trailing comma
+                        jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
                         jsonBuilder.Append("]");
                     }
                     else

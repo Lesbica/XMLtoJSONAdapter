@@ -1,5 +1,4 @@
 ﻿using System.Xml;
-using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -25,11 +24,11 @@ namespace Adapter
 
         private XmlNode JsonConvertToXmlNode(string jsonData, XmlDocument xmlDoc)
         {
-            var jsonObject = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>(jsonData);
+            var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonData);
             return ConvertJsonToXmlNode(jsonObject, xmlDoc);
         }
 
-        private XmlNode ConvertJsonToXmlNode(Newtonsoft.Json.Linq.JObject jsonObject, XmlDocument xmlDoc)
+        private XmlNode ConvertJsonToXmlNode(JObject jsonObject, XmlDocument xmlDoc)
         {
             var rootElement = xmlDoc.CreateElement("Root");
 
@@ -42,14 +41,14 @@ namespace Adapter
             return rootElement;
         }
 
-        private XmlNode ConvertJsonToXmlNode(string nodeName, Newtonsoft.Json.Linq.JToken token, XmlDocument xmlDoc)
+        private XmlNode ConvertJsonToXmlNode(string nodeName, JToken token, XmlDocument xmlDoc)
         {
             var node = xmlDoc.CreateElement(nodeName);
 
             switch (token.Type)
             {
                 case JTokenType.Object:
-                    var jsonObject = (Newtonsoft.Json.Linq.JObject)token;
+                    var jsonObject = (JObject)token;
                     foreach (var property in jsonObject.Properties())
                     {
                         var childNode = ConvertJsonToXmlNode(property.Name, property.Value, xmlDoc);
@@ -58,7 +57,7 @@ namespace Adapter
                     break;
 
                 case JTokenType.Array:
-                    var jsonArray = (Newtonsoft.Json.Linq.JArray)token;
+                    var jsonArray = (JArray)token;
                     foreach (var arrayItem in jsonArray)
                     {
                         var childNode = ConvertJsonToXmlNode("Item", arrayItem, xmlDoc);
